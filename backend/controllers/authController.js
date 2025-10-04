@@ -43,13 +43,18 @@ const registerUser = async (req, res) => {
       role,
     });
 
+    // Prepend the base URL to the profile image URL if it exists
+    const newProfileImageUrl = user.profileImageUrl
+      ? `${req.protocol}://${req.get("host")}/${user.profileImageUrl}`
+      : null;
+
     // Return user data with JWT
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
-      profileImageUrl: user.profileImageUrl,
+      profileImageUrl: newProfileImageUrl,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -75,13 +80,18 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    // Prepend the base URL to the profile image URL if it exists
+    const profileImageUrl = user.profileImageUrl
+      ? `${req.protocol}://${req.get("host")}/${user.profileImageUrl}`
+      : null;
+
     // Return user data with JWT
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       role: user.role,
-      profileImageUrl: user.profileImageUrl,
+      profileImageUrl,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -98,7 +108,13 @@ const getUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.json(user);
+
+    // Prepend the base URL to the profile image URL if it exists
+    const profileImageUrl = user.profileImageUrl
+      ? `${req.protocol}://${req.get("host")}/${user.profileImageUrl}`
+      : null;
+
+    res.json({ ...user.toObject(), profileImageUrl });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -109,7 +125,7 @@ const getUserProfile = async (req, res) => {
 // @access  Private (Requires JWT)
 const updateUserProfile = async (req, res) => {
   try {
-     const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -125,11 +141,17 @@ const updateUserProfile = async (req, res) => {
 
     const updatedUser = await user.save();
 
+    // Prepend the base URL to the profile image URL if it exists
+    const profileImageUrl = updatedUser.profileImageUrl
+      ? `${req.protocol}://${req.get("host")}/${updatedUser.profileImageUrl}`
+      : null;
+
     res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       role: updatedUser.role,
+      profileImageUrl,
       token: generateToken(updatedUser._id),
     });
   } catch (error) {

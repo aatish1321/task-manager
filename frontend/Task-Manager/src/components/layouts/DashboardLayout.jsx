@@ -6,10 +6,14 @@ import SideMenu from "./SideMenu";
 const DashboardLayout = ({ children, activeMenu }) => {
   const { user } = useContext(UserContext);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
 
   const handleThemeChange = () => {
-    setIsDarkMode(!isDarkMode);
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
   };
 
   useEffect(() => {
