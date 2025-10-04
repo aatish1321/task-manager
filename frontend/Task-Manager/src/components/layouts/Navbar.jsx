@@ -56,11 +56,22 @@ const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
         {/* User Profile */}
         <div className="relative group">
           <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary-200 dark:ring-primary-700 hover:ring-primary-400 dark:hover:ring-primary-500 transition-all duration-200 cursor-pointer">
-            <img
-              src={user?.profileImageUrl}
-              alt="Profile Image"
-              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
-            />
+            {user?.profileImageUrl ? (
+              <img
+                src={user.profileImageUrl}
+                alt="Profile Image"
+                className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <div 
+              className={`w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-500 to-accent-500 text-white font-bold text-sm transition-transform duration-200 group-hover:scale-110 ${user?.profileImageUrl ? 'hidden' : 'flex'}`}
+            >
+              {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+            </div>
           </div>
           
           {/* Online indicator */}

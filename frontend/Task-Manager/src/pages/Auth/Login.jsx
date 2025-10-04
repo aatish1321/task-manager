@@ -11,6 +11,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {updateUser} = useContext(UserContext)
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Login = () => {
     }
 
     setError("");
+    setIsLoading(true);
 
     //Login API Call
     try {
@@ -52,11 +54,30 @@ const Login = () => {
         }
       }
     } catch (error){
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
+      console.error("Login error:", error);
+      
+      if (error.response) {
+        // Server responded with error status
+        if (error.response.status === 401) {
+          setError("Invalid email or password. Please check your credentials and try again.");
+        } else if (error.response.status === 400) {
+          setError("Please check your email and password format.");
+        } else if (error.response.status === 500) {
+          setError("Server error. Please try again later.");
+        } else if (error.response.data && error.response.data.message) {
+          setError(error.response.data.message);
+        } else {
+          setError("Login failed. Please try again.");
+        }
+      } else if (error.request) {
+        // Network error
+        setError("Network error. Please check your internet connection and try again.");
       } else {
+        // Other error
         setError("Something went wrong. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -107,8 +128,19 @@ const Login = () => {
             </button>
           </div>
 
-          <button type="submit" className="btn-primary">
-            Sign In
+          <button 
+            type="submit" 
+            className="btn-primary flex items-center justify-center gap-2"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <div className="spinner"></div>
+                Signing In...
+              </>
+            ) : (
+              'Sign In'
+            )}
           </button>
 
           <div className="text-center">
