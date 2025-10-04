@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
 
-const ProfilePhotoSelector = ({ image, setImage }) => {
+const ProfilePhotoSelector = ({ image, setImage, name }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -25,6 +25,16 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
   const onChooseFile = () => {
     inputRef.current.click();
   };
+
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   return (
     <div className="flex justify-center mb-6">
       <input
@@ -36,8 +46,11 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
       />
 
       {!image ? (
-        <div className="w-20 h-20 flex items-center justify-center bg-blue-100/50 rounded-full relative cursor-pointer">
-          <LuUser className="text-4xl text-primary" />
+        <div 
+          className="w-20 h-20 flex items-center justify-center rounded-full relative cursor-pointer"
+          style={{ backgroundColor: getRandomColor() }}
+        >
+          <span className="text-4xl text-white">{name ? name.charAt(0).toUpperCase() : <LuUser />}</span>
 
           <button
             type="button"

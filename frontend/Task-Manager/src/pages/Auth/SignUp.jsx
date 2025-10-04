@@ -92,7 +92,7 @@ const SignUp = () => {
         </p>
 
         <form onSubmit={handleSignUp}>
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
+          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} name={fullName} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
