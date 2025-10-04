@@ -27,6 +27,12 @@ connectDB();
 // Middleware
 app.use(express.json());
 
+// *** FIX: ADD A ROOT ROUTE TO CONFIRM API IS LIVE ***
+app.get('/', (req, res) => {
+    // This confirms your API is alive and functional, replacing the "Cannot GET /" error.
+    res.status(200).send("Task Manager API is running and connected to MongoDB.");
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
