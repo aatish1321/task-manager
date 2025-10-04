@@ -1,7 +1,12 @@
-export const BASE_URL = "http://localhost:8000";
+// In frontend/Task-Manager/src/utils/apiPaths.js
+
+// FIX: Read the deployed backend URL from the VITE_APP_API_URL environment variable.
+// If the variable is not set (i.e., when running locally), it defaults to the local URL.
+export const BASE_URL = import.meta.env.VITE_APP_API_URL || "http://localhost:8000";
 
 // utils/apiPaths.js
 export const API_PATHS = {
+  // ... (rest of your API_PATHS object remains the same)
   AUTH: {
     REGISTER: "/api/auth/register", // Register a new user (Admin or Member)
     LOGIN: "/api/auth/login", // Authenticate user & return JWT token
