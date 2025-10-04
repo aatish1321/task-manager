@@ -18,8 +18,8 @@ import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
     <UserProvider>
-      <div>
-        <Router>
+      <Router>
+        <div>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
@@ -33,7 +33,7 @@ const App = () => {
             </Route>
 
             {/* User Routes */}
-            <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+            <Route element={<PrivateRoute allowedRoles={["user"]} />}>
               <Route path="/user/dashboard" element={<UserDashboard />} />
               <Route path="/user/tasks" element={<MyTasks />} />
               <Route
@@ -45,17 +45,17 @@ const App = () => {
              {/* Default Route */}
             <Route path="/" element={<Root />} />
           </Routes>
-        </Router>
-      </div>
+        </div>
 
-      <Toaster
-        toastOptions={{
-          className: "",
-          style: {
-            fontSize: "13px",
-          },
-        }}
-      />
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              fontSize: "13px",
+            },
+          }}
+        />
+      </Router>
     </UserProvider>
   );
 };
@@ -65,7 +65,16 @@ export default App;
 const Root = () => {
   const { user, loading } = useContext(UserContext);
 
-  if(loading) return <Outlet />
+  if(loading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 dark:bg-dark-bg flex items-center justify-center">
+        <div className="text-center">
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-neutral-600 dark:text-neutral-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
   
   if (!user) {
     return <Navigate to="/login" />;

@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { HiOutlineBell, HiOutlineCog6Tooth } from "react-icons/hi2";
 import SideMenu from "./SideMenu";
-import { LuMoon, LuSun } from "react-icons/lu";
+import DarkModeToggle from "../DarkModeToggle";
 import { UserContext } from "../../context/userContext";
 
 const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
@@ -10,10 +11,10 @@ const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="flex justify-between items-center gap-5 bg-base-100 text-neutral border-b border-neutral/20 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30 shadow-sm">
+    <div className="flex justify-between items-center gap-5 bg-white/80 dark:bg-dark-bg/80 text-neutral-900 dark:text-dark-text border-b border-neutral-200/50 dark:border-dark-border backdrop-blur-md py-4 px-7 sticky top-0 z-30 shadow-soft">
       <div className="flex items-center gap-5">
         <button
-          className="block lg:hidden text-neutral"
+          className="block lg:hidden text-neutral-700 dark:text-neutral-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-dark-surfaceHover"
           onClick={() => {
             setOpenSideMenu(!openSideMenu);
           }}
@@ -25,30 +26,58 @@ const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
           )}
         </button>
 
-        <h2 className="text-lg font-medium text-neutral">Task Manager</h2>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <button onClick={onThemeChange}>
-          {isDarkMode ? (
-            <LuSun className="text-xl" />
-          ) : (
-            <LuMoon className="text-xl" />
-          )}
-        </button>
-
-        <div className="w-9 h-9 rounded-full">
-          <img
-            src={user?.profileImageUrl}
-            alt="Profile Image"
-            className="w-full h-full object-cover rounded-full"
-          />
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-to-r from-primary-600 to-accent-500 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">TM</span>
+          </div>
+          <h2 className="text-xl font-semibold gradient-text">Task Manager</h2>
         </div>
       </div>
 
+      <div className="flex items-center gap-4">
+        {/* Notifications */}
+        <button className="relative p-2 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 rounded-lg hover:bg-neutral-100 dark:hover:bg-dark-surfaceHover group">
+          <HiOutlineBell className="text-xl" />
+          <span className="absolute -top-1 -right-1 w-3 h-3 bg-error-500 rounded-full animate-pulse"></span>
+        </button>
+
+        {/* Settings */}
+        <button className="p-2 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 rounded-lg hover:bg-neutral-100 dark:hover:bg-dark-surfaceHover">
+          <HiOutlineCog6Tooth className="text-xl" />
+        </button>
+
+        {/* Dark Mode Toggle */}
+        <DarkModeToggle 
+          isDarkMode={isDarkMode} 
+          onToggle={onThemeChange}
+          size="default"
+        />
+
+        {/* User Profile */}
+        <div className="relative group">
+          <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-primary-200 dark:ring-primary-700 hover:ring-primary-400 dark:hover:ring-primary-500 transition-all duration-200 cursor-pointer">
+            <img
+              src={user?.profileImageUrl}
+              alt="Profile Image"
+              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-110"
+            />
+          </div>
+          
+          {/* Online indicator */}
+          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success-500 rounded-full border-2 border-white dark:border-dark-bg"></div>
+        </div>
+      </div>
+
+      {/* Mobile Side Menu Overlay */}
       {openSideMenu && (
-        <div className="fixed top-[61px] -ml-7 bg-base-100 w-full h-full">
-          <SideMenu activeMenu={activeMenu} />
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setOpenSideMenu(false)}
+          />
+          <div className="fixed top-[73px] left-0 right-0 bg-white dark:bg-dark-surface shadow-soft-lg animate-slide-in">
+            <SideMenu activeMenu={activeMenu} />
+          </div>
         </div>
       )}
     </div>

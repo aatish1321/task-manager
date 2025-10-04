@@ -77,91 +77,125 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="bg-base-100 p-5 rounded-lg my-5">
-        <div>
-          <div className="col-span-3">
-            <h2 className="text-xl md:text-2xl text-neutral">Good Morning! {user?.name}</h2>
-            <p className="text-xs md:text-[13px] text-neutral/60 mt-1.5">
-              {moment().format("dddd Do MMM YYYY")}
+      {/* Welcome Section */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-neutral-900 dark:text-dark-text mb-2">
+              Good Morning, <span className="gradient-text">{user?.name}</span>! 👋
+            </h1>
+            <p className="text-neutral-600 dark:text-neutral-400">
+              {moment().format("dddd, MMMM Do YYYY")} • Here's what's happening today
             </p>
           </div>
+          <div className="hidden md:flex items-center gap-4">
+            <div className="text-right">
+              <p className="text-sm text-neutral-500 dark:text-neutral-400">Current Time</p>
+              <p className="text-lg font-semibold text-neutral-900 dark:text-dark-text">
+                {moment().format("h:mm A")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <InfoCard
+          label="Total Tasks"
+          value={addThousandsSeparator(
+            dashboardData?.charts?.taskDistribution?.All || 0
+          )}
+          color="bg-gradient-to-r from-primary-500 to-primary-600"
+          trend="up"
+          trendValue="12"
+        />
+
+        <InfoCard
+          label="Pending Tasks"
+          value={addThousandsSeparator(
+            dashboardData?.charts?.taskDistribution?.Pending || 0
+          )}
+          color="bg-gradient-to-r from-warning-500 to-warning-600"
+          trend="down"
+          trendValue="5"
+        />
+
+        <InfoCard
+          label="In Progress Tasks"
+          value={addThousandsSeparator(
+            dashboardData?.charts?.taskDistribution?.InProgress || 0
+          )}
+          color="bg-gradient-to-r from-info-500 to-info-600"
+          trend="up"
+          trendValue="8"
+        />
+
+        <InfoCard
+          label="Completed Tasks"
+          value={addThousandsSeparator(
+            dashboardData?.charts?.taskDistribution?.Completed || 0
+          )}
+          color="bg-gradient-to-r from-success-500 to-success-600"
+          trend="up"
+          trendValue="15"
+        />
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="card-hover">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-xl font-semibold text-neutral-900 dark:text-dark-text">Task Distribution</h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">Overview of task status</p>
+            </div>
+            <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/20 rounded-xl flex items-center justify-center">
+              <span className="text-2xl">📊</span>
+            </div>
+          </div>
+
+          <CustomPieChart
+            data={pieChartData}
+            colors={COLORS}
+          />
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5">
-          <InfoCard
-            label="Total Tasks"
-            value={addThousandsSeparator(
-              dashboardData?.charts?.taskDistribution?.All || 0
-            )}
-            color="bg-primary"
-          />
+        <div className="card-hover">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-xl font-semibold text-neutral-900 dark:text-dark-text">Task Priority Levels</h3>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">Priority distribution</p>
+            </div>
+            <div className="w-12 h-12 bg-accent-100 dark:bg-accent-900/20 rounded-xl flex items-center justify-center">
+              <span className="text-2xl">⚡</span>
+            </div>
+          </div>
 
-          <InfoCard
-            label="Pending Tasks"
-            value={addThousandsSeparator(
-              dashboardData?.charts?.taskDistribution?.Pending || 0
-            )}
-            color="bg-warning"
-          />
-
-          <InfoCard
-            label="In Progress Tasks"
-            value={addThousandsSeparator(
-              dashboardData?.charts?.taskDistribution?.InProgress || 0
-            )}
-            color="bg-info"
-          />
-
-          <InfoCard
-            label="Completed Tasks"
-            value={addThousandsSeparator(
-              dashboardData?.charts?.taskDistribution?.Completed || 0
-            )}
-            color="bg-success"
+          <CustomBarChart
+            data={barChartData}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
-        
-        <div>
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <div className="flex items-center justify-between">
-              <h5 className="font-medium text-neutral">Task Distribution</h5>
-            </div>
-
-            <CustomPieChart
-              data={pieChartData}
-              colors={COLORS}
-            />
+      {/* Recent Tasks Section */}
+      <div className="card-hover">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h3 className="text-xl font-semibold text-neutral-900 dark:text-dark-text">Recent Tasks</h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">Latest task activities</p>
           </div>
+
+          <button 
+            className="btn-secondary flex items-center gap-2 px-4 py-2" 
+            onClick={onSeeMore}
+          >
+            View All
+            <LuArrowRight className="text-base" />
+          </button>
         </div>
 
-        <div>
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <div className="flex items-center justify-between">
-              <h5 className="font-medium text-neutral">Task Priority Levels</h5>
-            </div>
-
-            <CustomBarChart
-              data={barChartData}
-            />
-          </div>
-        </div>
-
-        <div className="md:col-span-2">
-          <div className="bg-white p-5 rounded-lg shadow-md">
-            <div className="flex items-center justify-between ">
-              <h5 className="text-lg text-neutral">Recent Tasks</h5>
-
-              <button className="bg-primary/10 text-primary px-4 py-2 rounded-md hover:bg-primary/20" onClick={onSeeMore}>
-                See All <LuArrowRight className="text-base" />
-              </button>
-            </div>
-
-            <TaskListTable tableData={dashboardData?.recentTasks || []} />
-          </div>
-        </div>
+        <TaskListTable tableData={dashboardData?.recentTasks || []} />
       </div>
     </DashboardLayout>
   );

@@ -62,41 +62,66 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <div className="lg:w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Welcome Back</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
-          Please enter your details to log in
-        </p>
+      <div className="space-y-8">
+        <div className="text-center">
+          <h3 className="text-3xl font-bold text-neutral-900 dark:text-dark-text mb-2">Welcome Back</h3>
+          <p className="text-neutral-600 dark:text-neutral-400">
+            Please enter your details to log in to your account
+          </p>
+        </div>
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="space-y-6">
           <Input
             value={email}
             onChange={({ target }) => setEmail(target.value)}
             label="Email Address"
             placeholder="john@example.com"
-            type="text"
+            type="email"
+            required
+            error={error && error.includes('email') ? error : null}
           />
 
           <Input
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             label="Password"
-            placeholder="Min 8 Characters"
+            placeholder="Enter your password"
             type="password"
+            required
+            error={error && error.includes('password') ? error : null}
           />
 
-          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+          {error && !error.includes('email') && !error.includes('password') && (
+            <div className="p-4 bg-error-50 dark:bg-error-900/20 border border-error-200 dark:border-error-700 rounded-xl">
+              <p className="text-sm text-error-600 dark:text-error-400 text-center">{error}</p>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between">
+            <label className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+              <input type="checkbox" className="rounded border-neutral-300 text-primary-600 focus:ring-primary-500" />
+              Remember me
+            </label>
+            <button type="button" className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200">
+              Forgot password?
+            </button>
+          </div>
 
           <button type="submit" className="btn-primary">
-            LOGIN
+            Sign In
           </button>
 
-          <p className="text-[13px] text-slate-800 mt-3">
-            Don’t have an account?{" "}
-            <Link className="font-medium text-primary underline" to="/signup">
-              SignUp
-            </Link>
-          </p>
+          <div className="text-center">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              Don't have an account?{" "}
+              <Link 
+                className="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200" 
+                to="/signUp"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
         </form>
       </div>
     </AuthLayout>

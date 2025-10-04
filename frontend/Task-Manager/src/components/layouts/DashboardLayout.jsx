@@ -25,7 +25,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
   }, [isDarkMode]);
 
   return (
-    <div className="bg-base-100 min-h-screen">
+    <div className="bg-neutral-50 dark:bg-dark-bg min-h-screen transition-colors duration-300">
       <Navbar
         activeMenu={activeMenu}
         isDarkMode={isDarkMode}
@@ -38,7 +38,11 @@ const DashboardLayout = ({ children, activeMenu }) => {
             <SideMenu activeMenu={activeMenu} />
           </div>
 
-          <div className="flex-grow p-5 text-neutral">{children}</div>
+          <div className="flex-grow p-6 text-neutral-900 dark:text-dark-text animate-fade-in">
+            <div className="max-w-7xl mx-auto">
+              {children}
+            </div>
+          </div>
         </div>
       )}
     </div>
