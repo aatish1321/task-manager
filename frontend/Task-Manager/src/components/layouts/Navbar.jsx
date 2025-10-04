@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { HiOutlineBell, HiOutlineCog6Tooth } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import SideMenu from "./SideMenu";
 import DarkModeToggle from "../DarkModeToggle";
 import { UserContext } from "../../context/userContext";
 
 const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
 
@@ -42,7 +44,10 @@ const Navbar = ({ activeMenu, isDarkMode, onThemeChange }) => {
         </button>
 
         {/* Settings */}
-        <button className="p-2 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 rounded-lg hover:bg-neutral-100 dark:hover:bg-dark-surfaceHover">
+        <button 
+          onClick={() => navigate("/admin/settings")}
+          className="p-2 text-neutral-600 dark:text-neutral-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 rounded-lg hover:bg-neutral-100 dark:hover:bg-dark-surfaceHover"
+        >
           <HiOutlineCog6Tooth className="text-xl" />
         </button>
 

@@ -44,7 +44,7 @@ const DarkModeToggle = ({ isDarkMode, onToggle, size = 'default' }) => {
         <LuMoon 
           className={`
             ${iconSizes[size]}
-            text-primary-600
+            text-white
             transition-all duration-500
             ${isDarkMode ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-180 scale-0'}
             absolute inset-0

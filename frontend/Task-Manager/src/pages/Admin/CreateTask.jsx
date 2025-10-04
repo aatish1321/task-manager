@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { LuTrash2 } from "react-icons/lu";
 import SelectDropdown from "../../components/Inputs/SelectDropdown";
-import SelectUsers from "../../components/Inputs/SelectUsers";
 import TodoListInput from "../../components/Inputs/TodoListInput";
 import AddAttachmentsInput from "../../components/Inputs/AddAttachmentsInput";
 import DeleteAlert from "../../components/DeleteAlert";
@@ -24,7 +23,6 @@ const CreateTask = () => {
     description: "",
     priority: "Low",
     dueDate: null,
-    assignedTo: [],
     todoChecklist: [],
     attachments: [],
   });
@@ -47,7 +45,6 @@ const CreateTask = () => {
       description: "",
       priority: "Low",
       dueDate: null,
-      assignedTo: [],
       todoChecklist: [],
       attachments: [],
     });
@@ -130,10 +127,6 @@ const CreateTask = () => {
       return;
     }
 
-    if (taskData.assignedTo?.length === 0) {
-      setError("Task not assigned to any member");
-      return;
-    }
 
     if (taskData.todoChecklist?.length === 0) {
       setError("Add atleast one todo task");
@@ -166,7 +159,6 @@ const CreateTask = () => {
           dueDate: taskInfo.dueDate
             ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
             : null,
-          assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
           todoChecklist:
             taskInfo?.todoChecklist?.map((item) => item?.text) || [],
           attachments: taskInfo?.attachments || [],
@@ -282,18 +274,6 @@ const CreateTask = () => {
                 />
               </div>
 
-              <div className="col-span-12 md:col-span-3">
-                <label className="text-sm font-medium text-neutral/80">
-                  Assign To
-                </label>
-
-                <SelectUsers
-                  selectedUsers={taskData.assignedTo}
-                  setSelectedUsers={(value) => {
-                    handleValueChange("assignedTo", value);
-                  }}
-                />
-              </div>
             </div>
 
             <div className="mt-3">
