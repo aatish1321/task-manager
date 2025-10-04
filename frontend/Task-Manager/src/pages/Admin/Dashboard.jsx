@@ -77,11 +77,11 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="bg-gray-800 p-5 rounded-lg my-5">
+      <div className="bg-base-100 p-5 rounded-lg my-5">
         <div>
           <div className="col-span-3">
-            <h2 className="text-xl md:text-2xl text-white">Good Morning! {user?.name}</h2>
-            <p className="text-xs md:text-[13px] text-gray-400 mt-1.5">
+            <h2 className="text-xl md:text-2xl text-neutral">Good Morning! {user?.name}</h2>
+            <p className="text-xs md:text-[13px] text-neutral/60 mt-1.5">
               {moment().format("dddd Do MMM YYYY")}
             </p>
           </div>
@@ -93,7 +93,7 @@ const Dashboard = () => {
             value={addThousandsSeparator(
               dashboardData?.charts?.taskDistribution?.All || 0
             )}
-            color="bg-blue-500"
+            color="bg-primary"
           />
 
           <InfoCard
@@ -101,7 +101,7 @@ const Dashboard = () => {
             value={addThousandsSeparator(
               dashboardData?.charts?.taskDistribution?.Pending || 0
             )}
-            color="bg-violet-500"
+            color="bg-warning"
           />
 
           <InfoCard
@@ -109,7 +109,7 @@ const Dashboard = () => {
             value={addThousandsSeparator(
               dashboardData?.charts?.taskDistribution?.InProgress || 0
             )}
-            color="bg-cyan-500"
+            color="bg-info"
           />
 
           <InfoCard
@@ -117,7 +117,7 @@ const Dashboard = () => {
             value={addThousandsSeparator(
               dashboardData?.charts?.taskDistribution?.Completed || 0
             )}
-            color="bg-lime-500"
+            color="bg-success"
           />
         </div>
       </div>
@@ -125,9 +125,9 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
         
         <div>
-          <div className="bg-gray-800 p-5 rounded-lg">
+          <div className="bg-white p-5 rounded-lg shadow-md">
             <div className="flex items-center justify-between">
-              <h5 className="font-medium text-white">Task Distribution</h5>
+              <h5 className="font-medium text-neutral">Task Distribution</h5>
             </div>
 
             <CustomPieChart
@@ -138,9 +138,9 @@ const Dashboard = () => {
         </div>
 
         <div>
-          <div className="bg-gray-800 p-5 rounded-lg">
+          <div className="bg-white p-5 rounded-lg shadow-md">
             <div className="flex items-center justify-between">
-              <h5 className="font-medium text-white">Task Priority Levels</h5>
+              <h5 className="font-medium text-neutral">Task Priority Levels</h5>
             </div>
 
             <CustomBarChart
@@ -150,11 +150,11 @@ const Dashboard = () => {
         </div>
 
         <div className="md:col-span-2">
-          <div className="bg-gray-800 p-5 rounded-lg">
+          <div className="bg-white p-5 rounded-lg shadow-md">
             <div className="flex items-center justify-between ">
-              <h5 className="text-lg text-white">Recent Tasks</h5>
+              <h5 className="text-lg text-neutral">Recent Tasks</h5>
 
-              <button className="card-btn" onClick={onSeeMore}>
+              <button className="bg-primary/10 text-primary px-4 py-2 rounded-md hover:bg-primary/20" onClick={onSeeMore}>
                 See All <LuArrowRight className="text-base" />
               </button>
             </div>

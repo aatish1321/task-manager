@@ -203,9 +203,9 @@ const CreateTask = () => {
 
   return (
     <DashboardLayout activeMenu="Create Task">
-      <div className="mt-5">
+      <div className="p-4 sm:p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 mt-4">
-          <div className="form-card col-span-3">
+          <div className="col-span-3 bg-white p-6 rounded-lg shadow-md">
             <div className="flex items-center justify-between">
               <h2 className="text-xl md:text-xl font-medium">
                 {taskId ? "Update Task" : "Create Task"}
@@ -213,7 +213,7 @@ const CreateTask = () => {
 
               {taskId && (
                 <button
-                  className="flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded px-2 py-1 border border-rose-100 hover:border-rose-300 cursor-pointer"
+                  className="flex items-center gap-1.5 text-[13px] font-medium text-red-500 bg-red-500/10 rounded px-2 py-1 border border-red-500/20 hover:bg-red-500/20 cursor-pointer"
                   onClick={() => setOpenDeleteAlert(true)}
                 >
                   <LuTrash2 className="text-base" /> Delete
@@ -222,13 +222,13 @@ const CreateTask = () => {
             </div>
 
             <div className="mt-4">
-              <label className="text-xs font-medium text-slate-600">
+              <label className="text-sm font-medium text-neutral/80">
                 Task Title
               </label>
 
               <input
                 placeholder="Create App UI"
-                className="form-input"
+                className="w-full mt-1 px-3 py-2 border border-neutral/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 value={taskData.title}
                 onChange={({ target }) =>
                   handleValueChange("title", target.value)
@@ -237,13 +237,13 @@ const CreateTask = () => {
             </div>
 
             <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
+              <label className="text-sm font-medium text-neutral/80">
                 Description
               </label>
 
               <textarea
                 placeholder="Describe task"
-                className="form-input"
+                className="w-full mt-1 px-3 py-2 border border-neutral/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={4}
                 value={taskData.description}
                 onChange={({ target }) =>
@@ -254,7 +254,7 @@ const CreateTask = () => {
 
             <div className="grid grid-cols-12 gap-4 mt-2">
               <div className="col-span-6 md:col-span-4">
-                <label className="text-xs font-medium text-slate-600">
+                <label className="text-sm font-medium text-neutral/80">
                   Priority
                 </label>
 
@@ -267,13 +267,13 @@ const CreateTask = () => {
               </div>
 
               <div className="col-span-6 md:col-span-4">
-                <label className="text-xs font-medium text-slate-600">
+                <label className="text-sm font-medium text-neutral/80">
                   Due Date
                 </label>
 
                 <input
                   placeholder="Create App UI"
-                  className="form-input"
+                  className="w-full mt-1 px-3 py-2 border border-neutral/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                   value={taskData.dueDate}
                   onChange={({ target }) =>
                     handleValueChange("dueDate", target.value)
@@ -283,7 +283,7 @@ const CreateTask = () => {
               </div>
 
               <div className="col-span-12 md:col-span-3">
-                <label className="text-xs font-medium text-slate-600">
+                <label className="text-sm font-medium text-neutral/80">
                   Assign To
                 </label>
 
@@ -297,7 +297,7 @@ const CreateTask = () => {
             </div>
 
             <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
+              <label className="text-sm font-medium text-neutral/80">
                 TODO Checklist
               </label>
 
@@ -310,7 +310,7 @@ const CreateTask = () => {
             </div>
 
             <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">
+              <label className="text-sm font-medium text-neutral/80">
                 Add Attachments
               </label>
 
@@ -328,7 +328,7 @@ const CreateTask = () => {
 
             <div className="flex justify-end mt-7">
               <button
-                className="add-btn"
+                className="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 disabled:bg-primary/40"
                 onClick={handleSubmit}
                 disabled={loading}
               >
