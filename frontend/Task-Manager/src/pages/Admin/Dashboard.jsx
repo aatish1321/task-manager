@@ -77,10 +77,10 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="card my-5">
+      <div className="bg-gray-800 p-5 rounded-lg my-5">
         <div>
           <div className="col-span-3">
-            <h2 className="text-xl md:text-2xl">Good Morning! {user?.name}</h2>
+            <h2 className="text-xl md:text-2xl text-white">Good Morning! {user?.name}</h2>
             <p className="text-xs md:text-[13px] text-gray-400 mt-1.5">
               {moment().format("dddd Do MMM YYYY")}
             </p>
@@ -93,7 +93,7 @@ const Dashboard = () => {
             value={addThousandsSeparator(
               dashboardData?.charts?.taskDistribution?.All || 0
             )}
-            color="bg-primary"
+            color="bg-blue-500"
           />
 
           <InfoCard
@@ -125,9 +125,9 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
         
         <div>
-          <div className="card">
+          <div className="bg-gray-800 p-5 rounded-lg">
             <div className="flex items-center justify-between">
-              <h5 className="font-medium">Task Distribution</h5>
+              <h5 className="font-medium text-white">Task Distribution</h5>
             </div>
 
             <CustomPieChart
@@ -138,9 +138,9 @@ const Dashboard = () => {
         </div>
 
         <div>
-          <div className="card">
+          <div className="bg-gray-800 p-5 rounded-lg">
             <div className="flex items-center justify-between">
-              <h5 className="font-medium">Task Priority Levels</h5>
+              <h5 className="font-medium text-white">Task Priority Levels</h5>
             </div>
 
             <CustomBarChart
@@ -150,9 +150,9 @@ const Dashboard = () => {
         </div>
 
         <div className="md:col-span-2">
-          <div className="card">
+          <div className="bg-gray-800 p-5 rounded-lg">
             <div className="flex items-center justify-between ">
-              <h5 className="text-lg">Recent Tasks</h5>
+              <h5 className="text-lg text-white">Recent Tasks</h5>
 
               <button className="card-btn" onClick={onSeeMore}>
                 See All <LuArrowRight className="text-base" />
