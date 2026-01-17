@@ -16,3 +16,5 @@ router.put("/:id/status", protect, updateTaskStatus); // Update task status
 router.put("/:id/todo", protect, updateTaskChecklist); // Update task checklist
 
 module.exports = router;
+
+
